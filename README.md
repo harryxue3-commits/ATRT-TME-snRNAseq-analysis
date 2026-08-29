@@ -1,7 +1,5 @@
 # ATRT Tumor Microenvironment Cell-Cell Communication Analysis using snRNAseq data
 
-Reproducible analysis code for astrocyte, microglial, and cell–cell communication analyses of the GSE283839 ATRT single-nucleus RNA-sequencing dataset.
-
 
 CellChat v2 analysis of ligand-receptor interactions between tumor cells, astrocytes and microglia in atypical teratoid/rhabdoid tumor (ATRT) snRNA-seq data (GSE283839).
 
