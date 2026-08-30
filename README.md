@@ -1,67 +1,125 @@
-# ATRT Tumor Microenvironment Cell-Cell Communication Analysis using snRNAseq data
+# ATRT tumor-microenvironment analysis code
 
+This repository contains reproducible analysis scripts for the cohort-composition, astrocyte, microglial, Cell2Sentence, and CellChat analyses of the GSE283839 ATRT single-nucleus RNA-sequencing dataset.
 
-CellChat v2 analysis of ligand-receptor interactions between tumor cells, astrocytes and microglia in atypical teratoid/rhabdoid tumor (ATRT) snRNA-seq data (GSE283839).
+Raw GEO data and generated results are not included in this repository.
 
-## Data
+## Repository layout
 
-Download the following two files from [GEO accession GSE283839](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE283839) and place them in the same directory as the script:
+```text
+01_cohort_composition/
+02_astrocyte_state_analysis/
+03_astrocyte_support_analysis/
+04_microglia_state_analysis/
+05_cell2sentence_analysis/
+06_cellchat_analysis/
+environment/
+```
 
-| File | Description |
-|---|---|
-| `GSE283839_ATRT_RNA_V3_counts_raw.tsv` | Raw gene-by-nucleus count matrix |
-| `GSE283839_ATRT_RNA_V3_metadata.tsv` | Cell-level annotations and sample metadata |
+## Environment
 
-## Requirements
+Create the Python/R analysis environment with:
 
-- R >= 4.3
-- Bioconductor >= 3.18
+```bash
+conda env create -f environment/environment.yml
+conda activate atrt-tme-analysis
+```
 
-### Install dependencies
+The Cell2Sentence 27B inference script is designed for Google Colab and contains its own installation cell. The CellChat script uses additional R dependencies listed in `06_cellchat_analysis/CellChat_analysis.R`.
 
-Run the following once before executing the pipeline:
+## Input data
+
+Download the GSE283839 raw count matrix and metadata from GEO:
+
+- `GSE283839_ATRT_RNA_V3_counts_raw.tsv`
+- `GSE283839_ATRT_RNA_V3_metadata.tsv`
+
+Commands below use illustrative paths under `data/`; users may place files elsewhere and supply the corresponding paths.
+
+## 1. Cohort composition
+
+```bash
+python 01_cohort_composition/calculate_cohort_composition.py \
+  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv \
+  --counts data/GSE283839_ATRT_RNA_V3_counts_raw.tsv.gz \
+  --output-dir results/cohort_composition
+```
+
+## 2. Astrocyte state programs
+
+```bash
+python 05_cell2sentence_analysis/prepare_tme_cell2sentence_anndata.py \
+  --counts data/GSE283839_ATRT_RNA_V3_counts_raw.tsv.gz \
+  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv.gz \
+  --output results/cell2sentence/GSE283839_TME_C2S_ready.h5ad
+
+python 02_astrocyte_state_analysis/score_astrocyte_state_programs.py \
+  --input results/cell2sentence/GSE283839_TME_C2S_ready.h5ad \
+  --output-dir results/astrocyte_state_programs
+```
+
+## 3. Astrocyte support modules
+
+```bash
+python 03_astrocyte_support_analysis/analyze_astrocyte_support_modules.py \
+  --counts data/GSE283839_ATRT_RNA_V3_counts_raw.tsv.gz \
+  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv.gz \
+  --output-dir results/astrocyte_support_modules
+```
+
+## 4. Microglial state programs
+
+```bash
+python 04_microglia_state_analysis/extract_microglia_analysis_matrices.py \
+  --counts data/GSE283839_ATRT_RNA_V3_counts_raw.tsv.gz \
+  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv \
+  --output-dir results/microglia_inputs
+
+Rscript 04_microglia_state_analysis/score_microglia_state_programs.R \
+  data/GSE283839_ATRT_RNA_V3_metadata.tsv \
+  results/microglia_inputs/microglia_raw_counts.tsv.gz \
+  results/microglia_inputs/microglia_state_program_gene_sets.tsv \
+  results/microglia_state_programs
+```
+
+## 5. Cell2Sentence analysis
+
+```bash
+python 05_cell2sentence_analysis/generate_cell2sentence_ranked_gene_sentences.py \
+  --input results/cell2sentence/GSE283839_TME_C2S_ready.h5ad \
+  --output results/cell2sentence/GSE283839_TME_cell_sentences_top1000.csv
+```
+
+Run `05_cell2sentence_analysis/run_cell2sentence_27b_cell_type_prediction_colab.py` in Google Colab. Change `INPUT_CSV`, `OUTPUT_CSV`, and `CHECKPOINT_CSV` to the corresponding Google Drive locations.
+
+Then calculate supplementary rank-weighted state-program scores:
+
+```bash
+python 05_cell2sentence_analysis/score_cell2sentence_state_programs.py \
+  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv \
+  --predictions results/cell2sentence/GSE283839_TME_27B_predictions.csv \
+  --output-dir results/cell2sentence/state_programs
+```
+
+## 6. CellChat analysis
+
+The CellChat v2 analysis is in:
+
+```bash
+06_cellchat_analysis/CellChat_analysis.R
+```
+
+Place the raw count matrix and metadata in the working directory expected by the script, then run:
 
 ```r
-# Bioconductor packages
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-BiocManager::install(c("ComplexHeatmap", "BiocNeighbors"))
-
-# CellChat v2
-if (!requireNamespace("remotes", quietly = TRUE))
-  install.packages("remotes")
-remotes::install_github("jinworks/CellChat")
-
-# CRAN packages
-install.packages(c(
-  "Seurat", "data.table", "future",
-  "ggplot2", "patchwork", "circlize",
-  "scales", "RColorBrewer", "viridis",
-  "dplyr", "tidyr"
-))
+source("06_cellchat_analysis/CellChat_analysis.R")
 ```
 
-## Usage
+CellChat outputs are written to `cellchat_results/` with subfolders for figures, serialized objects, and tables.
 
-```r
-source("CellChat_analysis.R")
-```
+## Reproducibility notes
 
-All outputs are written to `cellchat_results/` in the working directory:
-
-```
-cellchat_results/
-  figures/    # PDF and PNG publication figures
-  rds/        # Serialised CellChat objects
-  tables/     # CSV interaction tables
-```
-
-## Citation
-
-If you use this code, please cite the source dataset:
-
-> Blanco-Carmona E et al. A cycling, progenitor-like cell population at the base of atypical teratoid rhabdoid tumor subtype differentiation trajectories. *Neuro Oncol*, 2025.
-
-and CellChat v2:
-
-> Jin S et al. Inference and analysis of cell-cell communication using CellChat. *Nature Communications*, 2021.
+- Required input and output paths are supplied explicitly where possible.
+- Raw data, generated result directories, large GEO files, and local system files are intentionally excluded.
+- Random seeds and analysis thresholds are defined in the corresponding scripts.
+- Communication results represent transcriptional compatibility or computational predictions, not demonstrated signaling.
