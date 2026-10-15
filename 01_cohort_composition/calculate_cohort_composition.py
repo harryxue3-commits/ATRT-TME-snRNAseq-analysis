@@ -116,7 +116,7 @@ def build() -> None:
             data["Final_Annotation"].eq("Microglia") & data["compartment"].eq("TME"),
             data["compartment"].eq("TME"),
         ],
-        ["Resolved innate immune (Microglia)", "Non-immune TME"],
+        ["Published-label microglia (identity assessed separately)", "Non-immune TME"],
         default="Not applicable (tumor)",
     )
 
