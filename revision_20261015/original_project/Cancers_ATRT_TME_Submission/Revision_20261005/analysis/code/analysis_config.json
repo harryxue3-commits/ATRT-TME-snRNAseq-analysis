@@ -1,0 +1,529 @@
+{
+  "seed": 20261005,
+  "n_null": 2000,
+  "null_pool_size": 200,
+  "max_rank": 1500,
+  "panels": {
+    "Astrocyte": [
+      "ALDH1L1",
+      "AQP4",
+      "SLC1A2",
+      "SLC1A3",
+      "GFAP",
+      "SOX9"
+    ],
+    "Astrocyte_no_metabolic": [
+      "ALDH1L1",
+      "AQP4",
+      "GFAP",
+      "SOX9",
+      "S100B",
+      "FGFR3"
+    ],
+    "Microglia": [
+      "P2RY12",
+      "TMEM119",
+      "GPR34",
+      "SALL1",
+      "P2RY13",
+      "SLC2A5",
+      "OLFML3",
+      "CX3CR1"
+    ],
+    "Macrophage": [
+      "CD163",
+      "MRC1",
+      "MS4A7",
+      "CD14",
+      "LYZ",
+      "FCGR3A",
+      "ITGA4",
+      "F13A1",
+      "STAB1"
+    ],
+    "Monocyte": [
+      "FCN1",
+      "VCAN",
+      "S100A8",
+      "S100A9",
+      "CCR2"
+    ],
+    "BAM": [
+      "MRC1",
+      "LYVE1",
+      "F13A1",
+      "CD163",
+      "STAB1"
+    ],
+    "Myeloid": [
+      "LST1",
+      "TYROBP",
+      "FCER1G",
+      "AIF1",
+      "CSF1R",
+      "SPI1",
+      "CTSS",
+      "CD68",
+      "C1QA",
+      "C1QB",
+      "C1QC"
+    ],
+    "OPC": [
+      "PDGFRA",
+      "OLIG1",
+      "OLIG2",
+      "SOX10",
+      "CSPG4"
+    ],
+    "Oligodendrocyte": [
+      "MBP",
+      "PLP1",
+      "MOG",
+      "MOBP"
+    ],
+    "Neuron": [
+      "SNAP25",
+      "SYT1",
+      "RBFOX3",
+      "STMN2"
+    ],
+    "Endothelial": [
+      "CLDN5",
+      "PECAM1",
+      "VWF",
+      "KDR"
+    ],
+    "Pericyte": [
+      "RGS5",
+      "PDGFRB",
+      "ABCC9",
+      "KCNJ8",
+      "CSPG4"
+    ],
+    "T_cell": [
+      "CD3D",
+      "CD3E",
+      "TRAC"
+    ],
+    "NK": [
+      "NKG7",
+      "GNLY",
+      "KLRD1"
+    ],
+    "B_cell": [
+      "MS4A1",
+      "CD79A",
+      "CD79B"
+    ],
+    "Dendritic": [
+      "CD1C",
+      "FCER1A",
+      "CLEC10A",
+      "CLEC9A",
+      "XCR1"
+    ]
+  },
+  "tumor_states": [
+    "CP-like",
+    "Cilia-like",
+    "Hypoxic",
+    "IPC-like",
+    "Mesenchymal-like",
+    "NPC-like",
+    "OPC-like",
+    "RG-like"
+  ],
+  "support_modules": {
+    "Cytokine_growth_factor_secretion": [
+      "IL6",
+      "LIF",
+      "OSM",
+      "TGFB1",
+      "TGFB2",
+      "TGFB3",
+      "VEGFA",
+      "VEGFB",
+      "FGF2",
+      "HGF",
+      "IGF1",
+      "IGF2",
+      "PDGFA",
+      "PDGFB",
+      "PDGFC",
+      "CXCL12",
+      "CCL2",
+      "CSF1",
+      "PTN",
+      "MDK",
+      "NRG1",
+      "KITLG",
+      "SPP1",
+      "SERPINE1",
+      "SHH"
+    ],
+    "ECM_adhesion_contact": [
+      "FN1",
+      "TNC",
+      "SPARCL1",
+      "THBS1",
+      "THBS2",
+      "COL1A1",
+      "COL1A2",
+      "COL3A1",
+      "COL4A1",
+      "COL4A2",
+      "LAMA2",
+      "LAMA4",
+      "LAMC1",
+      "VCAN",
+      "DCN",
+      "HSPG2",
+      "JAG1",
+      "ICAM1",
+      "VCAM1",
+      "GJA1",
+      "CD44",
+      "LGALS1",
+      "MMP2",
+      "MMP9"
+    ],
+    "Lipid_cholesterol_delivery": [
+      "APOE",
+      "CLU",
+      "ABCA1",
+      "ABCG1",
+      "LPL",
+      "FASN",
+      "SCD",
+      "SREBF1",
+      "SREBF2",
+      "HMGCR",
+      "HMGCS1",
+      "SQLE",
+      "LDLR",
+      "NPC1",
+      "FABP5"
+    ],
+    "Lactate_glucose_metabolic_support": [
+      "SLC2A1",
+      "SLC2A3",
+      "HK2",
+      "PFKFB3",
+      "GAPDH",
+      "PGK1",
+      "ENO1",
+      "LDHA",
+      "SLC16A1",
+      "SLC16A3",
+      "GYS1",
+      "PYGB",
+      "GPI"
+    ],
+    "Glutamate_glutamine_support": [
+      "SLC1A2",
+      "SLC1A3",
+      "GLUL",
+      "GLUD1",
+      "GOT1",
+      "GOT2",
+      "SLC38A2",
+      "SLC7A5",
+      "SLC1A4"
+    ],
+    "Antioxidant_glutathione_support": [
+      "SLC7A11",
+      "GCLC",
+      "GCLM",
+      "GSS",
+      "GSR",
+      "GPX1",
+      "GPX4",
+      "GSTP1",
+      "NQO1",
+      "HMOX1",
+      "SOD1",
+      "SOD2",
+      "PRDX1",
+      "PRDX2",
+      "NFE2L2"
+    ],
+    "Extracellular_vesicle_release": [
+      "RAB27A",
+      "RAB27B",
+      "SMPD3",
+      "PDCD6IP",
+      "TSG101",
+      "CD63",
+      "CD81",
+      "SDCBP",
+      "YKT6",
+      "VAMP7"
+    ],
+    "Mitochondrial_transfer_permissive": [
+      "TNFAIP2",
+      "RHOT1",
+      "RHOT2",
+      "TRAK1",
+      "TRAK2",
+      "KIF5B",
+      "MYO10",
+      "CDC42",
+      "RAC1",
+      "RHOA",
+      "MFN1",
+      "MFN2",
+      "OPA1",
+      "GJA1",
+      "CD38",
+      "GAP43"
+    ]
+  },
+  "astro_programs": {
+    "Homeostatic/support": [
+      "ALDH1L1",
+      "AQP4",
+      "SLC1A2",
+      "SLC1A3",
+      "GLUL",
+      "GJA1",
+      "S100B",
+      "SOX9",
+      "FGFR3",
+      "ATP1A2",
+      "ATP1B2",
+      "KCNJ10",
+      "SLC4A4",
+      "GPC5"
+    ],
+    "Pan-reactive": [
+      "GFAP",
+      "VIM",
+      "CD44",
+      "SERPINA3",
+      "LCN2",
+      "CHI3L1",
+      "OSMR",
+      "STAT3",
+      "SOCS3",
+      "JUN",
+      "FOS",
+      "CEBPB",
+      "ICAM1",
+      "VCAM1",
+      "TIMP1",
+      "ANXA1"
+    ],
+    "Inflammatory/IFN/complement-associated": [
+      "C3",
+      "SERPING1",
+      "GBP2",
+      "MX1",
+      "IFITM3",
+      "STAT1",
+      "CXCL10",
+      "CCL2",
+      "IL1B",
+      "TNF",
+      "NFKBIA",
+      "IRF1",
+      "HLA-DRA",
+      "HLA-DRB1",
+      "CD74",
+      "IFIT1",
+      "IFIT3",
+      "ISG15",
+      "CFB",
+      "C1S",
+      "C1R"
+    ],
+    "ECM/tissue-remodeling-associated": [
+      "S100A10",
+      "PTX3",
+      "EMP1",
+      "SPHK1",
+      "CD109",
+      "CLCF1",
+      "TGM1",
+      "TM4SF1",
+      "SPARCL1",
+      "CLU",
+      "APOE",
+      "THBS1",
+      "VEGFA"
+    ]
+  },
+  "lr_pairs": [
+    {
+      "ligand": "PTN",
+      "receptor": "PTPRZ1",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "MDK",
+      "receptor": "PTPRZ1",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "NCAM1",
+      "receptor": "FGFR1",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "SPP1",
+      "receptor": "CD44",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "SPP1",
+      "receptor": "ITGAV+ITGB1",
+      "note": "integrin heterodimer"
+    },
+    {
+      "ligand": "SPP1",
+      "receptor": "ITGAV+ITGB3",
+      "note": "integrin heterodimer"
+    },
+    {
+      "ligand": "SPP1",
+      "receptor": "ITGAV+ITGB5",
+      "note": "integrin heterodimer"
+    },
+    {
+      "ligand": "SPP1",
+      "receptor": "ITGA4+ITGB1",
+      "note": "integrin heterodimer"
+    },
+    {
+      "ligand": "SPP1",
+      "receptor": "ITGA5+ITGB1",
+      "note": "integrin heterodimer"
+    },
+    {
+      "ligand": "SPP1",
+      "receptor": "ITGA9+ITGB1",
+      "note": "integrin heterodimer"
+    },
+    {
+      "ligand": "APP",
+      "receptor": "CD74",
+      "note": "candidate CD74 association; no activation inferred"
+    },
+    {
+      "ligand": "MIF",
+      "receptor": "CD74+CD44",
+      "note": "CD74 co-receptor complex"
+    },
+    {
+      "ligand": "MIF",
+      "receptor": "CD74+CXCR4",
+      "note": "CD74 co-receptor complex"
+    },
+    {
+      "ligand": "TGFB1",
+      "receptor": "TGFBR1+TGFBR2",
+      "note": "heteromeric receptor"
+    },
+    {
+      "ligand": "TGFB2",
+      "receptor": "TGFBR1+TGFBR2",
+      "note": "heteromeric receptor"
+    },
+    {
+      "ligand": "TGFB3",
+      "receptor": "TGFBR1+TGFBR2",
+      "note": "heteromeric receptor"
+    },
+    {
+      "ligand": "GAS6",
+      "receptor": "AXL",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "GAS6",
+      "receptor": "MERTK",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "IGF1",
+      "receptor": "IGF1R",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "PDGFB",
+      "receptor": "PDGFRB",
+      "note": "single receptor gene; dimerization not measured"
+    },
+    {
+      "ligand": "PDGFC",
+      "receptor": "PDGFRA",
+      "note": "single receptor gene; dimerization not measured"
+    },
+    {
+      "ligand": "LAMA2",
+      "receptor": "CD44",
+      "note": "candidate association"
+    },
+    {
+      "ligand": "MDK",
+      "receptor": "LRP1",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "JAG1",
+      "receptor": "NOTCH1",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "SEMA3C",
+      "receptor": "PLXND1",
+      "note": "candidate pair; accessory receptors not resolved"
+    },
+    {
+      "ligand": "THBS1",
+      "receptor": "CD47",
+      "note": "single receptor"
+    },
+    {
+      "ligand": "TNC",
+      "receptor": "ITGAV+ITGB1",
+      "note": "integrin heterodimer"
+    }
+  ],
+  "rules": {
+    "identity_empirical_p": 0.05,
+    "minimum_marker_counts": [
+      1,
+      2,
+      3
+    ],
+    "primary_minimum_markers": 2,
+    "competing_enrichment_z_margin": 1.0,
+    "minimum_myeloid_backbone_markers": 2,
+    "astro_anchor": [
+      "ALDH1L1",
+      "AQP4",
+      "SLC1A2",
+      "SLC1A3"
+    ],
+    "astro_nonmetabolic_anchor": [
+      "ALDH1L1",
+      "AQP4"
+    ],
+    "microglia_anchor": [
+      "P2RY12",
+      "TMEM119",
+      "GPR34",
+      "SALL1"
+    ],
+    "minimum_neighborhood_support": 0.5,
+    "qc_exclusion_min_genes": 200,
+    "qc_exclusion_max_mito_percent": 10,
+    "min_astro_pseudobulk": 5,
+    "min_tumor_pseudobulk": 20,
+    "communication_group_sizes": [
+      5,
+      10,
+      20
+    ]
+  }
+}
