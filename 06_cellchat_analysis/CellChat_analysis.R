@@ -1,3 +1,6 @@
+# HISTORICAL AUGUST ANALYSIS: retains original settings for provenance.
+# Current 10,000-permutation drivers and finite-P/BH reporting are in
+# ../revision_20261015/cellchat_10000/. See the repository README.
 # =============================================================================
 # CellChat v2 — ATRT snRNA-seq (GSE283839)
 # Cell-cell communication: Tumor × Astrocytes × Microglia
