@@ -1,3 +1,7 @@
+# Historical output keys (dominant_program, M1/M2) are preserved for compatibility.
+# dominant_program means highest-relative-score DISPLAY assignment only.
+# Current terms are inflammatory and immunoregulatory; programs can coexist.
+# The revised sensitivities and donor-level analyses are in revision_20261015/.
 #!/usr/bin/env Rscript
 
 suppressPackageStartupMessages(library(data.table))
