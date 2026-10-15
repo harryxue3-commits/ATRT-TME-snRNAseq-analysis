@@ -105,7 +105,7 @@ def aggregate_counts(count_path: Path, groups: dict[str, str], wanted_genes: set
                 duplicates[gene] += 1
                 aggregated[gene] = aggregated.get(gene, np.zeros(len(group_labels), dtype=np.int64)) + group_counts
 
-    counts = pd.DataFrame(aggregated, index=group_labels).T.reindex(sorted(wanted_genes), fill_value=0)
+    counts = pd.DataFrame(aggregated, index=group_labels).T.sort_index()
     return (
         counts,
         pd.Series(library_sizes, index=group_labels, name="library_size"),
@@ -178,11 +178,20 @@ def main() -> None:
     pseudobulk_metadata.to_csv(output_dir / "pseudobulk_metadata.csv", index=False)
 
     module_rows = []
+    availability_rows = []
     for module, genes in MODULES.items():
-        scores = log2_cpm.loc[genes].mean(axis=0)
+        available = [gene for gene in genes if gene in log2_cpm.index]
+        if not available:
+            raise ValueError(f"No measured genes available for module: {module}")
+        availability_rows.extend({"module": module, "gene": gene,
+                                  "available_in_matrix": gene in available,
+                                  "requested_genes": len(genes),
+                                  "scored_genes": len(available)} for gene in genes)
+        scores = log2_cpm.loc[available].mean(axis=0)
         for group, score in scores.items():
             sample, compartment = group.split("|", 1)
             module_rows.append({"sample": sample, "compartment": compartment, "module": module, "score": score})
+    pd.DataFrame(availability_rows).to_csv(output_dir / "support_module_gene_availability.csv", index=False)
     module_scores = pd.DataFrame(module_rows)
     module_scores.to_csv(output_dir / "astrocyte_support_module_scores.csv", index=False)
 
