@@ -1,0 +1,8 @@
+CXX = /usr/bin/clang++
+CXX11 = /usr/bin/clang++
+CXX14 = /usr/bin/clang++
+CXX17 = /usr/bin/clang++
+CXX20 = /usr/bin/clang++
+CXX17FLAGS = -O2 -stdlib=libc++
+SHLIB_CXXLD = /usr/bin/clang++
+SHLIB_CXX17LD = /usr/bin/clang++
