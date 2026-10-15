@@ -1,0 +1,56 @@
+R version 4.4.3 (2025-02-28)
+Platform: aarch64-apple-darwin20.0.0
+Running under: macOS 26.6.2
+
+Matrix products: default
+BLAS/LAPACK: /Users/harry/Desktop/SangLab/Next/ATRTRNA-seq/Cancers_ATRT_TME_Submission/Revision_20261007/environment/cellchat/lib/libopenblas.0.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] C.UTF-8/C.UTF-8/C.UTF-8/C/C.UTF-8/C.UTF-8
+
+time zone: America/New_York
+tzcode source: system (macOS)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] future_1.76.0       Matrix_1.7-6        CellChat_2.1.2     
+[4] Biobase_2.66.0      BiocGenerics_0.52.0 ggplot2_4.0.3      
+[7] igraph_2.3.4        dplyr_1.2.1        
+
+loaded via a namespace (and not attached):
+  [1] pbapply_1.7-4         rlang_1.3.0           magrittr_2.0.5       
+  [4] clue_0.3-68           GetoptLong_1.1.1      gridBase_0.4-7       
+  [7] otel_0.2.0            matrixStats_1.5.0     compiler_4.4.3       
+ [10] systemfonts_1.3.2     png_0.1-9             vctrs_0.7.3          
+ [13] reshape2_1.4.5        ggalluvial_0.12.6     stringr_1.6.0        
+ [16] pkgconfig_2.0.3       shape_1.4.6.1         crayon_1.5.3         
+ [19] fastmap_1.2.0         backports_1.5.1       promises_1.5.0       
+ [22] network_1.20.0        purrr_1.2.2           cachem_1.1.0         
+ [25] jsonlite_2.0.0        later_1.4.8           broom_1.0.13         
+ [28] irlba_2.4.1           parallel_4.4.3        cluster_2.1.8.3      
+ [31] R6_2.6.1              bslib_0.12.0          stringi_1.8.9        
+ [34] RColorBrewer_1.1-3    reticulate_1.47.0     parallelly_1.48.0    
+ [37] car_3.1-5             jquerylib_0.1.4       Rcpp_1.1.2           
+ [40] iterators_1.0.14      future.apply_1.20.2   IRanges_2.40.0       
+ [43] FNN_1.1.4.1           httpuv_1.6.17         tidyselect_1.2.1     
+ [46] abind_1.4-8           doParallel_1.0.17     codetools_0.2-20     
+ [49] listenv_1.1.0         lattice_0.23-1        tibble_3.3.1         
+ [52] plyr_1.8.9            shiny_1.14.0          withr_3.0.3          
+ [55] S7_0.2.2              coda_0.19-4.1         circlize_0.4.18      
+ [58] pillar_1.11.1         BiocManager_1.30.27   ggpubr_1.0.0         
+ [61] carData_3.0-6         rngtools_1.5.2        foreach_1.5.2        
+ [64] stats4_4.4.3          generics_0.1.4        S4Vectors_0.44.0     
+ [67] scales_1.4.0          NMF_0.28              ggnetwork_0.5.14     
+ [70] globals_0.19.1        xtable_1.8-8          glue_1.8.1           
+ [73] tools_4.4.3           BiocNeighbors_2.0.0   RSpectra_0.16-2      
+ [76] ggsignif_0.6.4        registry_0.5-1        cowplot_1.2.0        
+ [79] grid_4.4.3            tidyr_1.3.2           colorspace_2.1-3     
+ [82] patchwork_1.3.2       Formula_1.2-6         cli_3.6.6            
+ [85] textshaping_1.0.5     svglite_2.2.2         ComplexHeatmap_2.22.0
+ [88] gtable_0.3.6          rstatix_1.1.0         sass_0.4.10          
+ [91] digest_0.6.39         ggrepel_0.9.8         rjson_0.2.23         
+ [94] sna_2.8               farver_2.1.2          htmltools_0.5.9      
+ [97] lifecycle_1.0.5       GlobalOptions_0.1.4   statnet.common_4.13.0
+[100] mime_0.13            
