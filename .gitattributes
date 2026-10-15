@@ -1,0 +1,3 @@
+# Keep archived source bytes stable for SHA-256 verification on all platforms.
+revision_20261015/original_project/** -text
+revision_20261015/cellchat_10000/** -text

@@ -1,125 +1,43 @@
-# ATRT tumor-microenvironment analysis code
+# ATRT tumor-microenvironment analysis
 
-This repository contains reproducible analysis scripts for the cohort-composition, astrocyte, microglial, Cell2Sentence, and CellChat analyses of the GSE283839 ATRT single-nucleus RNA-sequencing dataset.
+Analysis code for astrocyte and microglial expression programs and expression-supported glia–tumor interaction candidates in GSE283839, with an external ScPCA comparison. Updated 15 October 2026 to accompany the revised manuscript.
 
-Raw GEO data and generated results are not included in this repository.
+## Start here
 
-## Repository layout
+- [Revision analyses and run guide](revision_20261015/README.md): TME-restricted annotation, conservative/broader sensitivities, donor-level analyses, and external-cohort methods.
+- [10,000-permutation CellChat code and original run instructions](revision_20261015/cellchat_10000/README.txt): discovery subtype, donor-specific, conservative-annotation, and external runs; controlled Unannotated inclusion; validation and session records.
+- [Original pipeline commands](revision_20261015/README_AUGUST.md): the original 01–06 analyses. These alone do **not** reproduce all revised results. Paths in this archived guide are relative to the repository root.
 
-```text
-01_cohort_composition/
-02_astrocyte_state_analysis/
-03_astrocyte_support_analysis/
-04_microglia_state_analysis/
-05_cell2sentence_analysis/
-06_cellchat_analysis/
-environment/
-```
+## Current analysis conventions
 
-## Environment
+Primary discovery analyses retain deposited cell labels and all malignant assignments. Marker-based refinement is restricted to the 516 source TME nuclei. Conservative and broader populations overlap and are sensitivity definitions, not independent replicates or definitive cell identities. Macrophage-like and BAM-like labels denote expression phenotypes, not proven origin.
 
-Create the Python/R analysis environment with:
+Microglial scoring uses 75 retained gene–program entries representing 73 distinct genes (STAT1 and TREM2 each appear twice), with detection in at least nine of 288 nuclei. Continuous program scores are primary; historical `dominant_program` output keys mean highest-relative-score display assignment, not dominant biological function. M1/M2 keys retained in archived code correspond to inflammatory/immunoregulatory marker associations.
 
-```bash
-conda env create -f environment/environment.yml
-conda activate atrt-tme-analysis
-```
+Astrocyte pseudobulk module scores average genes actually present in the count matrix. The support-module script now explicitly distinguishes absent genes from measured zeros and exports gene availability: GPX1 is unavailable, leaving 14 of 15 requested antioxidant/glutathione genes. See Table S12 for the requested-panel denominator sensitivity.
 
-The Cell2Sentence 27B inference script is designed for Google Colab and contains its own installation cell. The CellChat script uses additional R dependencies listed in `06_cellchat_analysis/CellChat_analysis.R`.
+Current CellChat fits use **10,000 permutations**, finite P = (b + 1)/10,001, and BH correction across the full tested source–target–interaction family within each model before extracting highlighted candidates. Here b is the number of null scores **strictly greater** than the observed score, matching CellChat 2.1.2; zero observed scores receive P = 1. The native pathway summaries retain native P values; use the explicit finite-P/BH interaction outputs for revised inference. The separate donor-level correlation permutation analysis has its own settings and is not a CellChat test.
 
-## Input data
+The original `06_cellchat_analysis/CellChat_analysis.R` and original pooled probabilities are retained as historical analyses, not relabeled as new 10,000-permutation results. Use the revision drivers linked above for current inference. Receptor-complex checks use complete database definitions, including SPP1–(ITGAV + ITGB1); candidate-panel single-subunit shorthand is not a complete receptor definition.
 
-Download the GSE283839 raw count matrix and metadata from GEO:
+The external ScPCA cohort comprises eight specimens from four patients. Repeated specimens are linked before patient-level summaries; myeloid evidence is not automatically microglia-specific. Cell2Sentence provides a supplementary comparison, not independent validation. Its archived template settings are distinguished from unavailable historical execution logs, immutable model revision, and package versions (Table S18).
 
-- `GSE283839_ATRT_RNA_V3_counts_raw.tsv`
-- `GSE283839_ATRT_RNA_V3_metadata.tsv`
+## Current figure/table map
 
-Commands below use illustrative paths under `data/`; users may place files elsewhere and supply the corresponding paths.
+| Analysis | Current manuscript location |
+|---|---|
+| Overall workflow / cohort landscape | Figures 1 / 2 |
+| Astrocyte programs / paired support modules | Figures 3 / 4; Tables S2–S3, S8, S12 |
+| Microglial programs | Figure 5; Tables S2, S10–S11, S15 |
+| CellChat / summary schematic | Figures 6 / 7; Tables S4–S5, S13, S16–S17 |
+| Conservative identity markers | Main Table 1 (formerly Table S15) |
+| Annotation sensitivities / donor CellChat / external / C2S reproducibility | Tables S15 / S16 / S17 / S18 (formerly S16 / S17 / S18 / S19) |
+| Gene terminology and abbreviations | Table S7 |
 
-## 1. Cohort composition
+Archived filenames retain their original numbering for provenance; consult this map when reading them.
 
-```bash
-python 01_cohort_composition/calculate_cohort_composition.py \
-  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv \
-  --counts data/GSE283839_ATRT_RNA_V3_counts_raw.tsv.gz \
-  --output-dir results/cohort_composition
-```
+## Inputs, environment, and verification
 
-## 2. Astrocyte state programs
+Raw expression data, individual cell/patient metadata, manuscripts, credentials, and saved model objects are not included. Obtain the source datasets and restore required inputs before running the archive. Some original drivers retain machine-specific paths; the revision guide documents this limitation rather than claiming a turnkey rerun. Use the archived R session records for the CellChat environment; the original environment.yml is not a complete environment lock for the revision.
 
-```bash
-python 05_cell2sentence_analysis/prepare_tme_cell2sentence_anndata.py \
-  --counts data/GSE283839_ATRT_RNA_V3_counts_raw.tsv.gz \
-  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv.gz \
-  --output results/cell2sentence/GSE283839_TME_C2S_ready.h5ad
-
-python 02_astrocyte_state_analysis/score_astrocyte_state_programs.py \
-  --input results/cell2sentence/GSE283839_TME_C2S_ready.h5ad \
-  --output-dir results/astrocyte_state_programs
-```
-
-## 3. Astrocyte support modules
-
-```bash
-python 03_astrocyte_support_analysis/analyze_astrocyte_support_modules.py \
-  --counts data/GSE283839_ATRT_RNA_V3_counts_raw.tsv.gz \
-  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv.gz \
-  --output-dir results/astrocyte_support_modules
-```
-
-## 4. Microglial state programs
-
-```bash
-python 04_microglia_state_analysis/extract_microglia_analysis_matrices.py \
-  --counts data/GSE283839_ATRT_RNA_V3_counts_raw.tsv.gz \
-  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv \
-  --output-dir results/microglia_inputs
-
-Rscript 04_microglia_state_analysis/score_microglia_state_programs.R \
-  data/GSE283839_ATRT_RNA_V3_metadata.tsv \
-  results/microglia_inputs/microglia_raw_counts.tsv.gz \
-  results/microglia_inputs/microglia_state_program_gene_sets.tsv \
-  results/microglia_state_programs
-```
-
-## 5. Cell2Sentence analysis
-
-```bash
-python 05_cell2sentence_analysis/generate_cell2sentence_ranked_gene_sentences.py \
-  --input results/cell2sentence/GSE283839_TME_C2S_ready.h5ad \
-  --output results/cell2sentence/GSE283839_TME_cell_sentences_top1000.csv
-```
-
-Run `05_cell2sentence_analysis/run_cell2sentence_27b_cell_type_prediction_colab.py` in Google Colab. Change `INPUT_CSV`, `OUTPUT_CSV`, and `CHECKPOINT_CSV` to the corresponding Google Drive locations.
-
-Then calculate supplementary rank-weighted state-program scores:
-
-```bash
-python 05_cell2sentence_analysis/score_cell2sentence_state_programs.py \
-  --metadata data/GSE283839_ATRT_RNA_V3_metadata.tsv \
-  --predictions results/cell2sentence/GSE283839_TME_27B_predictions.csv \
-  --output-dir results/cell2sentence/state_programs
-```
-
-## 6. CellChat analysis
-
-The CellChat v2 analysis is in:
-
-```bash
-06_cellchat_analysis/CellChat_analysis.R
-```
-
-Place the raw count matrix and metadata in the working directory expected by the script, then run:
-
-```r
-source("06_cellchat_analysis/CellChat_analysis.R")
-```
-
-CellChat outputs are written to `cellchat_results/` with subfolders for figures, serialized objects, and tables.
-
-## Reproducibility notes
-
-- Required input and output paths are supplied explicitly where possible.
-- Raw data, generated result directories, large GEO files, and local system files are intentionally excluded.
-- Random seeds and analysis thresholds are defined in the corresponding scripts.
-- Communication results represent transcriptional compatibility or computational predictions, not demonstrated signaling.
+This repository update was checked for Python/R syntax and archive integrity, and the available-gene correction was tested on a synthetic matrix. The full computational analyses were not rerun during repository preparation. Expression-supported candidates require spatial, protein-level, and functional follow-up to establish biological communication.

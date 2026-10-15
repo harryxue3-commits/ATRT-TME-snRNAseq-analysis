@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local macOS metadata and large analysis inputs
+.DS_Store
+*.h5ad
+*.rds
+*.RDS
