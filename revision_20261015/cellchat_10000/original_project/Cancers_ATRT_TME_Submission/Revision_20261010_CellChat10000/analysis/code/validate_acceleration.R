@@ -1,0 +1,23 @@
+args<-commandArgs(trailingOnly=TRUE);project<-normalizePath(args[1])
+suppressPackageStartupMessages(library(CellChat));future::plan(future::sequential)
+rev<-file.path(project,'Cancers_ATRT_TME_Submission/Revision_20261010_CellChat10000/analysis')
+old<-file.path(project,'Cancers_ATRT_TME_Submission/Revision_20261007/analysis/cellchat')
+source(file.path(rev,'code/validated_fast_cellchat.R'));fn<-make_fast_cellchat(file.path(rev,'code'))
+rows<-list()
+for(scope in c('state_resolved','all_author_tumor')) for(sub in c('MYC','SHH','TYR')) {
+  name<-paste0('subtype__ATRT-',sub,'__',scope,'__exclude_MYC2');o<-readRDS(file.path(old,name,'CellChat.rds'))
+  a<-fn(o,type='truncatedMean',trim=.1,raw.use=TRUE,population.size=FALSE,nboot=100,seed.use=42)
+  dp<-max(abs(a@net$prob-o@net$prob));dv<-max(abs(a@net$pval-o@net$pval))
+  stopifnot(identical(a@net$prob,o@net$prob),identical(a@net$pval,o@net$pval))
+  rows[[name]]<-data.frame(run=name,n_permutations=100,seed=42,reference='Saved unmodified CellChat 2.1.2',probability_max_difference=dp,p_value_max_difference=dv,all_entries_identical=TRUE)
+  message('EXACT MATCH ',name)
+}
+# Independent non-default permutation count and seed, compared to a NEW native run.
+name<-'subtype__ATRT-MYC__state_resolved__exclude_MYC2';o<-readRDS(file.path(old,name,'CellChat.rds'))
+native<-CellChat::computeCommunProb(o,type='truncatedMean',trim=.1,raw.use=TRUE,population.size=FALSE,nboot=137,seed.use=271828)
+fast<-fn(o,type='truncatedMean',trim=.1,raw.use=TRUE,population.size=FALSE,nboot=137,seed.use=271828)
+stopifnot(identical(native@net$prob,fast@net$prob),identical(native@net$pval,fast@net$pval))
+rows[['independent']]<-data.frame(run=name,n_permutations=137,seed=271828,reference='New unmodified CellChat 2.1.2 run',probability_max_difference=max(abs(native@net$prob-fast@net$prob)),p_value_max_difference=max(abs(native@net$pval-fast@net$pval)),all_entries_identical=TRUE)
+write.csv(do.call(rbind,rows),file.path(rev,'tables/S13_acceleration_equivalence_validation.csv'),row.names=FALSE)
+writeLines(capture.output(sessionInfo()),file.path(rev,'data/acceleration_validation_sessionInfo.txt'))
+cat('All seven exact-equivalence comparisons passed.\n')
