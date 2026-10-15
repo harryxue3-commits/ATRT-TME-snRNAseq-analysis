@@ -1,0 +1,8 @@
+"run","n_permutations","seed","reference","probability_max_difference","p_value_max_difference","all_entries_identical"
+"subtype__ATRT-MYC__state_resolved__exclude_MYC2",100,42,"Saved unmodified CellChat 2.1.2",0,0,TRUE
+"subtype__ATRT-SHH__state_resolved__exclude_MYC2",100,42,"Saved unmodified CellChat 2.1.2",0,0,TRUE
+"subtype__ATRT-TYR__state_resolved__exclude_MYC2",100,42,"Saved unmodified CellChat 2.1.2",0,0,TRUE
+"subtype__ATRT-MYC__all_author_tumor__exclude_MYC2",100,42,"Saved unmodified CellChat 2.1.2",0,0,TRUE
+"subtype__ATRT-SHH__all_author_tumor__exclude_MYC2",100,42,"Saved unmodified CellChat 2.1.2",0,0,TRUE
+"subtype__ATRT-TYR__all_author_tumor__exclude_MYC2",100,42,"Saved unmodified CellChat 2.1.2",0,0,TRUE
+"subtype__ATRT-MYC__state_resolved__exclude_MYC2",137,271828,"New unmodified CellChat 2.1.2 run",0,0,TRUE
